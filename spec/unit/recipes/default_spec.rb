@@ -16,7 +16,6 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-
 require 'spec_helper'
 
 describe 'sample-go-cm::default' do
@@ -24,6 +23,21 @@ describe 'sample-go-cm::default' do
     let(:chef_run) do
       runner = ChefSpec::ServerRunner.new
       runner.converge(described_recipe)
+    end
+
+    before do
+      stub_command('/usr/local/go/bin/go version | grep "go1.5 "').and_return(true)
+    end
+
+    it 'configures golang' do
+      expect(chef_run).to include_recipe('golang')
+    end
+    it 'get the sample-go artifact' do
+      expect(chef_run).to create_remote_file('/opt/sample-go').with(mode: '0755', owner: 'nobody')
+    end
+    it 'configures supervisord to run sample-go' do
+      expect(chef_run).to include_recipe('supervisor')
+      expect(chef_run).to enable_supervisor_service('sample-go')
     end
 
     it 'converges successfully' do

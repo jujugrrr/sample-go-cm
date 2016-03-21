@@ -1,9 +1,11 @@
 require 'spec_helper'
 
 describe 'sample-go-cm::default' do
-  # Serverspec examples can be found at
-  # http://serverspec.org/resource_types.html
-  it 'does something' do
-    skip 'Replace this with meaningful tests'
+  describe command('wget -qO - "localhost:8484"') do
+    its(:stdout) do
+      should match(
+        /Hi there, I'm served from default-ubuntu-1404!/
+      )
+    end
   end
 end
