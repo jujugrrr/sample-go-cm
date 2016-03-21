@@ -16,3 +16,17 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
+include_recipe 'golang'
+
+remote_file '/opt/sample-go' do
+  source node['sample-go-cm']['artifact_url']
+  mode '0755'
+  owner 'nobody'
+end
+
+include_recipe 'supervisor'
+supervisor_service 'sample-go' do
+  command '/opt/sample-go'
+  action :enable
+  user 'nobody'
+end
