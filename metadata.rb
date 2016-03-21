@@ -1,0 +1,7 @@
+name 'sample-go-cm'
+maintainer 'The Authors'
+maintainer_email 'you@example.com'
+license 'apache2'
+description 'Installs/Configures sample-go-cm'
+long_description 'Installs/Configures sample-go-cm'
+version '0.1.0'
