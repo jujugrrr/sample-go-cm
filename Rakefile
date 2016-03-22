@@ -26,14 +26,23 @@ end
 task style: ['style:chef', 'style:ruby']
 
 # Integration tests. Kitchen.ci
+
 namespace :integration do
+  desc 'Run test-kitchen in circleci context (docker)'
+  task :circleci do
+    @loader = Kitchen::Loader::YAML.new(local_config: '.kitchen.circleci.yml')
+    Kitchen::Config.new(loader: @loader).instances.each do |instance|
+      instance.test(:always)
+    end
+  end
+
   begin
     require 'kitchen/rake_tasks'
 
     desc 'Run kitchen integration tests'
     Kitchen::RakeTasks.new
-  rescue LoadError
-    puts '>>>>> Kitchen gem not loaded, omitting tasks' unless ENV['CI']
+  rescue
+    puts '>>>>> Kitchen gem not loaded, omitting tasks' # unless ENV['CI']
   end
 end
 # Alias
@@ -64,5 +73,8 @@ end
 
 desc 'Run full test stack'
 task test: ['style', 'unit:rspec:ci', 'integration:kitchen:all']
+
+desc 'Run full test stack on circleci'
+task testci: ['style', 'unit:rspec:ci', 'integration:circleci']
 
 task default: %w(style unit:rspec:ci)

@@ -4,7 +4,7 @@ describe 'sample-go-cm::default' do
   describe command('wget -qO - "localhost:8484"') do
     its(:stdout) do
       should match(
-        /Hi there, I'm served from default-ubuntu-1404!/
+        /Hi there, I'm served from .*!/
       )
     end
   end

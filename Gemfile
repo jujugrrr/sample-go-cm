@@ -8,5 +8,6 @@ gem 'ci_reporter_rspec'
 
 group :integration do
   gem 'test-kitchen'
+  gem 'kitchen-docker'
   gem 'kitchen-vagrant'
 end
