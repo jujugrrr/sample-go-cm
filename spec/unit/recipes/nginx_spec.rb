@@ -33,6 +33,7 @@ describe 'sample-go-cm::nginx' do
       expect(chef_run).to include_recipe('nginx')
       expect(chef_run).to render_file('/etc/nginx/sites-available/proxy').with_content(/[0-9]+.[0-9]+.[0-9]+.[0-9]+/)
       expect(chef_run).to enable_nginx_site('proxy')
+      expect(chef_run).to disable_nginx_site('default')
     end
   end
 end
