@@ -6,7 +6,7 @@ description 'Installs/Configures the sample-go application'
 long_description 'Installs/Configures the sample-go application'
 issues_url 'https://github.com/jujugrrr/sample-go-cm/issues'
 source_url 'https://github.com/jujugrrr/sample-go-cm/'
-version '0.1.0'
+version '0.1.1'
 
 depends 'apt'
 depends 'golang'
