@@ -1,5 +1,7 @@
 # sample-go-cm
 
+[![Circle CI](https://circleci.com/gh/jujugrrr/sample-go-cm.svg?style=svg)](https://circleci.com/gh/jujugrrr/sample-go-cm)
+
 # Cookbook for sample-go
 
 ## Description
