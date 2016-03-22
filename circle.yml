@@ -1,0 +1,19 @@
+machine:
+  ruby:
+    version: 2.2.4
+  environment:
+    KITCHEN_LOCAL_YAML: .kitchen.circleci.yml
+
+dependencies:
+  cache_directories:
+    - "~/bundle"
+  override:
+    - sudo service docker start
+    - bundle install --path=~/bundle --jobs=4 --retry=3:
+        timeout: 600
+test:
+  override:
+    - bundle exec rake testci
+  post: 
+    - bundle exec berks package sample-go-cm.tar.gz
+    - mv sample-go-cm.tar.gz ${CIRCLE_ARTIFACTS}/

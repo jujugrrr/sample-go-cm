@@ -1,0 +1,3 @@
+# Increase line length, we're not on VT220s anymore
+LineLength:
+  Max: 180
