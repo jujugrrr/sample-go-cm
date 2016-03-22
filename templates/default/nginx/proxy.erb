@@ -1,0 +1,13 @@
+upstream samplego {
+<% @backends.each do | backend | %>
+  server <%= backend %>:8484;
+<% end %>
+}
+
+server {
+  listen 80;
+
+  location / {
+      proxy_pass http://samplego;
+  }
+}

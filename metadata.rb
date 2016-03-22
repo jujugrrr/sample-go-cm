@@ -10,4 +10,5 @@ version '0.1.0'
 
 depends 'apt'
 depends 'golang'
+depends 'nginx', '~> 2.7.6'
 depends 'supervisor'
