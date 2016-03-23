@@ -36,6 +36,7 @@ remote_file '/opt/sample-go/sample-go' do
   source node['sample-go-cm']['artifact_url']
   mode '0755'
   owner 'samplego'
+  notifies :restart, 'supervisor_service[sample-go]', :delayed
 end
 
 # Set up the service

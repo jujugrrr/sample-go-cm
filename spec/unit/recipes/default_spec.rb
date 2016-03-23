@@ -44,6 +44,10 @@ describe 'sample-go-cm::default' do
       expect(chef_run).to enable_supervisor_service('sample-go')
     end
 
+    it 'restart the app on deploy' do
+      expect(chef_run.remote_file('/opt/sample-go/sample-go')).to notify('supervisor_service[sample-go]').to(:restart).delayed
+    end
+
     it 'converges successfully' do
       expect { chef_run }.to_not raise_error
     end
