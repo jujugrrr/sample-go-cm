@@ -29,11 +29,15 @@ describe 'sample-go-cm::default' do
       stub_command('/usr/local/go/bin/go version | grep "go1.5 "').and_return(true)
     end
 
+    it 'creates the samplego user' do
+      expect(chef_run).to create_user_account('samplego')
+    end
+
     it 'configures golang' do
       expect(chef_run).to include_recipe('golang')
     end
     it 'get the sample-go artifact' do
-      expect(chef_run).to create_remote_file('/opt/sample-go').with(mode: '0755', owner: 'nobody')
+      expect(chef_run).to create_remote_file('/opt/sample-go/sample-go').with(mode: '0755', owner: 'samplego')
     end
     it 'configures supervisord to run sample-go' do
       expect(chef_run).to include_recipe('supervisor')

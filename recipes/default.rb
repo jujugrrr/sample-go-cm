@@ -18,15 +18,30 @@
 
 include_recipe 'golang'
 
-remote_file '/opt/sample-go' do
-  source node['sample-go-cm']['artifact_url']
-  mode '0755'
-  owner 'nobody'
+# Deploy account and CI ssh key
+user_account 'samplego' do
+  comment   'User to run samplego'
+  ssh_keys  [node['sample-go-cm']['ci-key']]
+  home      '/opt/sample-go'
+end
+sudo 'samplego' do
+  user      'samplego'
+  runas     'root'
+  nopasswd true
+  commands ['/usr/local/bin/supervisorctl restart sample-go']
 end
 
+# Get the artifact
+remote_file '/opt/sample-go/sample-go' do
+  source node['sample-go-cm']['artifact_url']
+  mode '0755'
+  owner 'samplego'
+end
+
+# Set up the service
 include_recipe 'supervisor'
 supervisor_service 'sample-go' do
-  command '/opt/sample-go'
+  command '/opt/sample-go/sample-go'
   action :enable
-  user 'nobody'
+  user 'samplego'
 end
