@@ -17,3 +17,10 @@ test:
   post: 
     - bundle exec berks package sample-go-cm.tar.gz
     - mv sample-go-cm.tar.gz ${CIRCLE_ARTIFACTS}/
+
+deployment:
+  master:
+    branch: master
+    commands:
+      - pip install awscli
+      - aws s3 cp ${CIRCLE_ARTIFACTS}/sample-go-cm.tar.gz s3://circleci-samplego/sample-go-cm.tar.gz --acl 'public-read'
